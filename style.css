@@ -1,0 +1,10 @@
+body{
+    margin: 0;
+}
+section{
+    text-align: center;
+}
+canvas{
+    border: 3px solid black;
+    box-shadow: 0 5px 10px gray;
+}
