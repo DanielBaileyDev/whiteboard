@@ -1,9 +1,10 @@
 const WIDTH = 1200;
 const HEIGHT = 800;
 
+let socket = io();
+
 const canvas = document.getElementById('whiteboard');
 const ctx = canvas.getContext('2d');
-
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
 
@@ -51,8 +52,29 @@ function draw(mouse){
         }
         ctx.fill();
         prevMouseLocation = [mouse.offsetX, mouse.offsetY];
+        socket.emit('canvas', makeSmall());
     }
 }
+
+function makeSmall(){
+    let canvasContents = canvas.toDataURL();
+    let data = { image: canvasContents, date: Date.now() };
+    let string = JSON.stringify(data);
+    return string;
+}
+
+function makeBig(newCanvas){
+    var data = JSON.parse(newCanvas);
+    var image = new Image();
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0);
+    }
+    image.src = data.image;
+}
+
+socket.on('canvas', newCanvas => {
+    makeBig(newCanvas);
+});
 
 function turnOn(mouse){
     isDrawing = true;
