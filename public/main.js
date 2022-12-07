@@ -16,11 +16,11 @@ document.addEventListener('mouseup', mouseOff);
 
 function mouseOn(mouse){
     let curr = [mouse.offsetX, mouse.offsetY];
-    whiteboard.mouseOn(mouse);
-    socket.emit('canvas', {
-        previous: [], 
-        current: curr
-    });
+    if(whiteboard.mouseOn(mouse))
+        socket.emit('canvas', {
+            previous: [], 
+            current: curr
+        });
 }
 
 function mouseOff(mouse){
@@ -30,13 +30,13 @@ function mouseOff(mouse){
 function drawSend(mouse){
     let prev = whiteboard.prevMouseLocation;
     let curr = [mouse.offsetX, mouse.offsetY];
-    if(whiteboard.draw(mouse))
+    if(whiteboard.canDraw(mouse))
         socket.emit('canvas', {
             previous: prev, 
             current: curr
         });
 }
 
-socket.on('canvas', newCanvas => {
-    newCanvas.data.forEach(draw=>whiteboard.drawCanvas(draw.previous, draw.current));
+socket.on('canvas', lines => {
+    lines.forEach(line=>whiteboard.draw(line.previous, line.current));
 });

@@ -3,19 +3,19 @@ class Whiteboard {
         this.isDrawing = false;
         this.prevMouseLocation = [];
     }
-    // Draws circles from previous mouse location to current mouse location to prevent skipping
-    // fix problem: skipping when going from canvas to body
-    draw(mouse) {
+    
+    canDraw(mouse) {
         let current = [mouse.offsetX, mouse.offsetY];
-        if (this.isDrawing && (this.prevMouseLocation.length === 0 ||
-            (this.prevMouseLocation[0] !== current[0] || this.prevMouseLocation[1] !== current[1]))) {
-            this.prevMouseLocation = this.drawCanvas(this.prevMouseLocation, current);
+        if (this.isDrawing) {
+            this.prevMouseLocation = this.draw(this.prevMouseLocation, current);
             return true;
         }
         return false;
     }
 
-    drawCanvas(prev, current) {
+    // Draws circles from previous mouse location to current mouse location to prevent skipping
+    // fix problem: skipping when going from canvas to body
+    draw(prev, current) {
         ctx.beginPath();
         if (prev.length > 0) {
             let differenceX = prev[0] - current[0];
@@ -54,8 +54,10 @@ class Whiteboard {
     mouseOn(mouse) {
         this.isDrawing = true;
         if (mouse.srcElement.id === 'whiteboard') {
-            this.draw(mouse);
+            this.canDraw(mouse);
+            return true;
         }
+        return false;
     }
 
     mouseOff() {
