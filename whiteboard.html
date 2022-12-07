@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whiteboard</title>
-    <!-- Font Awesome -->
-	<script src="https://kit.fontawesome.com/16da70b445.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/16da70b445.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -17,12 +16,13 @@
             <button id="newBoard">Create Board <i class="fa-regular fa-plus"></i></button>
         </nav>
     </header>
-    <main class="home">
-        <section>
-            <h1>Welcome to Whiteboard Collabs</h1>
-            <p>Create a room, send your friends the link, then collaborate</p>
-        </section>
-    </main>
+    <section>
+        <canvas id="whiteboard"></canvas>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/createboard.js"></script>
+    <script src="/whiteboard.js"></script>
+    <script src="/main.js"></script>
 </body>
 </html>
