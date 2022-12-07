@@ -18,7 +18,7 @@ function mouseOn(mouse){
     let curr = [mouse.offsetX, mouse.offsetY];
     if(whiteboard.mouseOn(mouse)){
         let boardName = window.location.href.split('/').at(-1);
-        socket.emit('canvas', {
+        socket.emit('board', {
             name: boardName,
             line: {
                 previous: [], 
@@ -37,7 +37,7 @@ function drawSend(mouse){
     let curr = [mouse.offsetX, mouse.offsetY];
     if(whiteboard.canDraw(mouse)){
         let boardName = window.location.href.split('/').at(-1);
-        socket.emit('canvas', {
+        socket.emit('board', {
             name: boardName,
             line: {
                 previous: prev, 
@@ -47,6 +47,6 @@ function drawSend(mouse){
     }
 }
 
-socket.on('canvas', lines => {
+socket.on('board', lines => {
     lines.forEach(line=>whiteboard.draw(line.previous, line.current));
 });

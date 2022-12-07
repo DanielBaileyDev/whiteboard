@@ -1,6 +1,6 @@
 document.getElementById('newBoard').addEventListener('click', createBoard);
 
-function createBoard(){
-    let room = Math.floor(Math.random() * 10000);
-    window.location = `/whiteboard/${room}`;
+async function createBoard(){
+    let res = await fetch('/createboard', {method: 'GET'});
+    window.location = `/whiteboard/${await res.json()}`;
 }
