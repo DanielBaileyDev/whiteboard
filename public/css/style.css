@@ -6,6 +6,7 @@ body{
 
 header{
     background: linear-gradient(#fff, #d3d3d3);
+    padding: 15px 0;
 }
 
 nav{
@@ -16,31 +17,73 @@ nav{
     margin:auto;
 }
 
+.third{
+    width: 33.333%;
+}
+
+#logo{
+    font-size: 30px;
+}
+
+.middle{
+    text-align: center;
+}
+
+h3{
+    font-size: 24px;
+    margin: 0;
+}
+
+.right{
+    text-align: right;
+}
+
 button{
+    font-size: 16px;
     text-decoration: none;
-    background-color: green;
+    background-color: #319d1e;
     color: white;
+    border: 3px solid #2c8d1b;
     padding: 10px 15px;
-    border: 3px solid darkgreen;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.5s;
+}
+
+button:hover{
+    background-color: #39b223;
 }
 
 section{
     text-align: center;
 }
 
-canvas, .home{
+canvas, main{
     border: 3px solid black;
     box-shadow: 0 5px 10px gray;
     background-color: #fff;
 }
 
-.home{
+main{
     width: 1200px;
     height: 800px;
     margin:auto;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.home{
+    position: relative;
+    top: -50px;
+}
+
+h1{
+    font-size: 40px;
+    margin: 0;
+}
+
+p{
+    font-size: 20px;
+    margin: 15px 0 0;
 }

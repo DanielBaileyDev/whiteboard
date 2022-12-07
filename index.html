@@ -6,23 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whiteboard</title>
     <!-- Font Awesome -->
-	<script src="https://kit.fontawesome.com/16da70b445.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/style.css">
+    <script src="/fontawesome/fontawesome.js"></script>
+    <script src="/fontawesome/solid.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header>
         <nav>
-            <i class="fa-solid fa-chalkboard-user"></i>
-            <h3>Whiteboard Collabs</h3>
-            <button id="newBoard">Create Board <i class="fa-regular fa-plus"></i></button>
+            <div class="third">
+                <i id="logo" class="fa-solid fa-chalkboard-user"></i>
+            </div>
+            <div class="third middle">
+                <h3>Whiteboard Collabs</h3>
+            </div>
+            <div class="third right">
+                <button id="newBoard">Create Board <i class="fa-solid fa-plus"></i></button>
+            </div>
         </nav>
     </header>
-    <main class="home">
-        <section>
+    <main>
+        <section class="home">
             <h1>Welcome to Whiteboard Collabs</h1>
             <p>Create a room, send your friends the link, then collaborate</p>
         </section>
     </main>
-    <script src="/createboard.js"></script>
+    <script src="/js/createboard.js"></script>
 </body>
 </html>
