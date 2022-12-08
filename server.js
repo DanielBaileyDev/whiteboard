@@ -40,7 +40,7 @@ app.get('/createboard', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    let boardName = socket.handshake.headers.referer.split('/').at(-1);
+    let boardName = socket.handshake.headers.referer.split('/').slice(-1)[0];
     if (ObjectId.isValid(boardName)) {
         socket.join(boardName);
         collection.findOne({ _id: ObjectId(boardName) })

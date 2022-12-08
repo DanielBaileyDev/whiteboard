@@ -44,7 +44,8 @@ function setTool(mouseButton){
 }
 
 function sendLine(prev, curr){
-    let boardName = window.location.href.split('/').at(-1);
+    let boardName = window.location.href.split('/').slice(-1)[0];
+    console.log(boardName);
         socket.emit('board', {
             name: boardName,
             line: {
