@@ -5,8 +5,8 @@ let socket = io();
 
 const whiteboard = new Whiteboard(WIDTH, HEIGHT);
 
-whiteboard.canvas.addEventListener('contextmenu', evt => { 
-        evt.preventDefault();
+whiteboard.canvas.addEventListener('contextmenu', evt => {
+    evt.preventDefault();
 });
 
 document.addEventListener('mousedown', mouseOn);
@@ -32,28 +32,27 @@ function drawSend(mouse) {
     }
 }
 
-function setTool(mouseButton){
+function setTool(mouseButton) {
     if (mouseButton === 1) {
         whiteboard.tool = 'pencil';
     } else if (mouseButton === 3) {
         whiteboard.tool = 'eraser';
-    } else{
+    } else {
         return false;
     }
     return true;
 }
 
-function sendLine(prev, curr){
-    let boardName = window.location.href.split('/').slice(-1)[0];
-    console.log(boardName);
-        socket.emit('board', {
-            name: boardName,
-            line: {
-                tool: whiteboard.tool,
-                previous: prev,
-                current: curr
-            }
-        });
+function sendLine(prev, curr) {
+    let boardName = window.location.href.split('/').pop();
+    socket.emit('board', {
+        name: boardName,
+        line: {
+            tool: whiteboard.tool,
+            previous: prev,
+            current: curr
+        }
+    });
 }
 
 socket.on('board', lines => {
