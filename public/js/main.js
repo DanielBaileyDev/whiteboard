@@ -3,50 +3,61 @@ const HEIGHT = 800;
 
 let socket = io();
 
-const canvas = document.getElementById('whiteboard');
-const ctx = canvas.getContext('2d');
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
+const whiteboard = new Whiteboard(WIDTH, HEIGHT);
 
-const whiteboard = new Whiteboard();
+whiteboard.canvas.addEventListener('contextmenu', evt => { 
+        evt.preventDefault();
+});
 
 document.addEventListener('mousedown', mouseOn);
-canvas.addEventListener('mousemove', drawSend);
+whiteboard.canvas.addEventListener('mousemove', drawSend);
 document.addEventListener('mouseup', mouseOff);
 
-function mouseOn(mouse){
+function mouseOn(mouse) {
     let curr = [mouse.offsetX, mouse.offsetY];
-    if(whiteboard.mouseOn(mouse)){
-        let boardName = window.location.href.split('/').at(-1);
-        socket.emit('board', {
-            name: boardName,
-            line: {
-                previous: [], 
-                current: curr
-            }
-        });
+    if (setTool(mouse.which) && whiteboard.mouseOn(mouse)) {
+        sendLine([], curr);
     }
 }
 
-function mouseOff(mouse){
-    whiteboard.mouseOff(mouse);
+function mouseOff() {
+    whiteboard.mouseOff();
 }
 
-function drawSend(mouse){
+function drawSend(mouse) {
     let prev = whiteboard.prevMouseLocation;
     let curr = [mouse.offsetX, mouse.offsetY];
-    if(whiteboard.canDraw(mouse)){
-        let boardName = window.location.href.split('/').at(-1);
+    if (whiteboard.canDraw(mouse)) {
+        sendLine(prev, curr);
+    }
+}
+
+function setTool(mouseButton){
+    if (mouseButton === 1) {
+        whiteboard.tool = 'pencil';
+    } else if (mouseButton === 3) {
+        whiteboard.tool = 'eraser';
+    } else{
+        return false;
+    }
+    return true;
+}
+
+function sendLine(prev, curr){
+    let boardName = window.location.href.split('/').at(-1);
         socket.emit('board', {
             name: boardName,
             line: {
-                previous: prev, 
+                tool: whiteboard.tool,
+                previous: prev,
                 current: curr
             }
         });
-    }
 }
 
 socket.on('board', lines => {
-    lines.forEach(line=>whiteboard.draw(line.previous, line.current));
+    lines.forEach(line => {
+        whiteboard.tool = line.tool;
+        whiteboard.draw(line.previous, line.current);
+    });
 });

@@ -31,7 +31,7 @@ app.get('/whiteboard/:board', (req, res) => {
 app.get('/createboard', (req, res) => {
     collection.insertOne({
         "createdAt": new Date(),
-        lines: []
+        lines: [],
     })
         .then(result => {
             res.send(result.insertedId);
